@@ -1,0 +1,77 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {%block content%}
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li><a href="{%url 'home' %}">Dashboard</a></li>
+            <li><a href="{%url 'order' %}">Orders</a></li>
+            <li><a href="{%url 'sales'%}">Sales</a></li>
+            <li><a href="{%url 'products'%}">Products</a></li>
+            <li><a href="{%url 'customer'%}">Customers</a></li>
+            <li><a href="">Analytics</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome, Admin</h1>
+            <button id="logoutBtn">Logout</button>
+        </div>
+        <div class="content">
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <h3>Total Orders</h3>
+                        <p id="totalOrders">120</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Revenue</h3>
+                        <p id="revenue">$15,000</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Customers</h3>
+                        <p id="totalCustomers">350</p>
+                    </div>
+                </div>
+            </section>
+            <section id="orders">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Item</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTable">
+                        <tr>
+                            <td>#001</td>
+                            <td>John Doe</td>
+                            <td>Pizza</td>
+                            <td>Delivered</td>
+                            <td>2024-09-01</td>
+                        </tr>
+                        <!-- More rows can be added dynamically with JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{%endblock content%}
+</body>
+</html>

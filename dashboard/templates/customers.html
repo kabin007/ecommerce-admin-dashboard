@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Customer Management</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li><a href="{%url 'home' %}">Dashboard</a></li>
+            <li><a href="{%url 'order' %}">Orders</a></li>
+            <li><a href="{%url 'sales'%}">Sales</a></li>
+            <li><a href="{%url 'products'%}">Products</a></li>
+            <li><a href="{%url 'customer'%}">Customers</a></li>
+            <li><a href="">Analytics</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Customer Management</h1>
+        </div>
+        <div class="content">
+            <section id="customers">
+                <h2>Customer Charts</h2>
+                <div class="chart-container">
+                    <canvas id="customerSignUpLineChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="activeCustomersBarChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script >
+// Customer Sign-Up Data (example data)
+const customerSignUpData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+    datasets: [{
+        label: 'Customer Sign-Ups',
+        data: [50, 70, 100, 120, 90, 140, 160, 180, 200],
+        fill: false,
+        borderColor: 'rgba(52, 152, 219, 1)',
+        tension: 0.1
+    }]
+};
+
+// Most Active Customers Data (example data)
+const activeCustomersData = {
+    labels: ['Customer A', 'Customer B', 'Customer C', 'Customer D', 'Customer E'],
+    datasets: [{
+        label: 'Number of Orders',
+        data: [12, 9, 7, 15, 10],
+        backgroundColor: 'rgba(46, 204, 113, 0.6)',
+        borderColor: 'rgba(39, 174, 96, 1)',
+        borderWidth: 1
+    }]
+};
+
+// Configuring Line Chart for Customer Sign-Ups
+const customerSignUpLineChartConfig = {
+    type: 'line',
+    data: customerSignUpData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+// Configuring Bar Chart for Most Active Customers
+const activeCustomersBarChartConfig = {
+    type: 'bar',
+    data: activeCustomersData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+// Rendering the Charts
+window.onload = function() {
+    const customerSignUpLineChartCtx = document.getElementById('customerSignUpLineChart').getContext('2d');
+    new Chart(customerSignUpLineChartCtx, customerSignUpLineChartConfig);
+
+    const activeCustomersBarChartCtx = document.getElementById('activeCustomersBarChart').getContext('2d');
+    new Chart(activeCustomersBarChartCtx, activeCustomersBarChartConfig);
+};
+
+    </script>
+</body>
+</html>

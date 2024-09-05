@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Order Statistics</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+.chart-container {
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li><a href="{%url 'home' %}">Dashboard</a></li>
+            <li><a href="{%url 'order' %}">Orders</a></li>
+            <li><a href="{%url 'sales'%}">Sales</a></li>
+            <li><a href="{%url 'products'%}">Products</a></li>
+            <li><a href="#customers">Customers</a></li>
+            <li><a href="">Analytics</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Order Statistics</h1>
+        </div>
+        <div class="content">
+            <section id="orders">
+                <h2>Order Charts</h2>
+                <div class="chart-container">
+                    <canvas id="orderStatusPieChart"></canvas>
+                </div>
+                <div class="chart-container" >
+                    <canvas id="ordersBarChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script >
+        // Order Status Data (example data)
+const orderStatusData = {
+    labels: ['Pending', 'Delivered', 'Cancelled', 'In Progress'],
+    datasets: [{
+        label: 'Order Status',
+        data: [15, 50, 10, 25],
+        backgroundColor: [
+            'rgba(241, 196, 15, 0.6)',
+            'rgba(46, 204, 113, 0.6)',
+            'rgba(231, 76, 60, 0.6)',
+            'rgba(52, 152, 219, 0.6)'
+        ],
+        borderColor: [
+            'rgba(241, 196, 15, 1)',
+            'rgba(46, 204, 113, 1)',
+            'rgba(231, 76, 60, 1)',
+            'rgba(52, 152, 219, 1)'
+        ],
+        borderWidth: 1
+    }]
+};
+
+// Orders Over Time Data (example data)
+const ordersOverTimeData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+    datasets: [{
+        label: 'Number of Orders',
+        data: [30, 45, 60, 40, 50, 70, 90, 80, 100],
+        backgroundColor: 'rgba(155, 89, 182, 0.6)',
+        borderColor: 'rgba(142, 68, 173, 1)',
+        borderWidth: 1
+    }]
+};
+
+// Configuring Pie Chart for Order Status
+const orderStatusPieChartConfig = {
+    type: 'pie',
+    data: orderStatusData,
+    options: {
+        responsive: true
+    }
+};
+
+// Configuring Bar Chart for Orders Over Time
+const ordersBarChartConfig = {
+    type: 'bar',
+    data: ordersOverTimeData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+// Rendering the Charts
+window.onload = function() {
+    const orderStatusPieChartCtx = document.getElementById('orderStatusPieChart').getContext('2d');
+    new Chart(orderStatusPieChartCtx, orderStatusPieChartConfig);
+
+    const ordersBarChartCtx = document.getElementById('ordersBarChart').getContext('2d');
+    new Chart(ordersBarChartCtx, ordersBarChartConfig);
+};
+
+    </script>
+</body>
+</html>
